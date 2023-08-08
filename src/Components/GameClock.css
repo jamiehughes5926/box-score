@@ -1,0 +1,9 @@
+.game-clock {
+  text-align: center;
+  font-size: 48px;
+  margin-bottom: -200px;
+}
+
+.game-clock button {
+  margin: 10px;
+}

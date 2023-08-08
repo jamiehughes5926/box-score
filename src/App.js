@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import Scoreboard from "./Components/ScoreBoard";
+import GameClock from "./Components/GameClock";
 
 function App() {
+  const [quarterLength, setQuarterLength] = useState(12);
+  const [currentQuarter, setCurrentQuarter] = useState(1);
+  const [quarterEnd, setQuarterEnd] = useState(false);
+
+  useEffect(() => {
+    if (quarterEnd && currentQuarter < 4) {
+      setCurrentQuarter(currentQuarter + 1);
+      setQuarterEnd(false);
+    }
+  }, [quarterEnd, currentQuarter]);
+
+  if (currentQuarter > 4) {
+    return <div>Game Over!</div>;
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GameClock
+        quarterLength={quarterLength}
+        onQuarterEnd={() => setQuarterEnd(true)}
+      />
+      <Scoreboard onQuarterEnd={() => setQuarterEnd(true)} />
     </div>
   );
 }
